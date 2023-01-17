@@ -1,12 +1,15 @@
 const { Context, measureText } = require("./Context");
 const { isAnimated } = require("../utils/effectUtil");
 const range = require("../utils/range");
+const {getImageDataSxOrSy} = require("../utils/configUtil");
 
 class Motion {
   constructor(config) {
     this.version = config.version;
     this.scale = config.scale;
     this.totalFrames = config.totalFrames;
+    this.clipWidth = config.width;
+    this.clipHeight = config.height;
   }
 
   renderNoneStatic(message, color) {
@@ -17,7 +20,11 @@ class Motion {
 
     context.fillText(message, 0, ascent);
 
-    return [context.getImageData(0, 0, width, height)];
+    let sx = this.clipWidth ? getImageDataSxOrSy(width, this.clipWidth) : 0;
+    let sy = this.clipHeight ? getImageDataSxOrSy(height, this.clipHeight) : 0;
+    let sw = this.clipWidth ? this.clipWidth : width;
+    let sh = this.clipHeight ? this.clipHeight : height;
+    return [context.getImageData(sx, sy, sw, sh)];
   }
 
   renderNoneDynamic(line, color) {
@@ -29,7 +36,11 @@ class Motion {
 
       context.fillText(line, 0, ascent);
 
-      return context.getImageData(0, 0, width, height);
+      let sx = this.clipWidth ? getImageDataSxOrSy(width, this.clipWidth) : 0;
+      let sy = this.clipHeight ? getImageDataSxOrSy(height, this.clipHeight) : 0;
+      let sw = this.clipWidth ? this.clipWidth : width;
+      let sh = this.clipHeight ? this.clipHeight : height;
+      return context.getImageData(sx, sy, sw, sh);
     });
   }
 
@@ -99,7 +110,11 @@ class Motion {
         context.fillText(char, x, y);
       });
 
-      return context.getImageData(0, 0, width, height);
+      let sx = this.clipWidth ? getImageDataSxOrSy(width, this.clipWidth) : 0;
+      let sy = this.clipHeight ? getImageDataSxOrSy(height, this.clipHeight) : 0;
+      let sw = this.clipWidth ? this.clipWidth : width;
+      let sh = this.clipHeight ? this.clipHeight : height;
+      return context.getImageData(sx, sy, sw, sh);
     });
   }
 
@@ -114,7 +129,11 @@ class Motion {
 
       context.fillText(line, Math.round(displacement), ascent);
 
-      return context.getImageData(0, 0, width, height);
+      let sx = this.clipWidth ? getImageDataSxOrSy(width, this.clipWidth) : 0;
+      let sy = this.clipHeight ? getImageDataSxOrSy(height, this.clipHeight) : 0;
+      let sw = this.clipWidth ? this.clipWidth : width;
+      let sh = this.clipHeight ? this.clipHeight : height;
+      return context.getImageData(sx, sy, sw, sh);
     });
   }
 
@@ -164,7 +183,11 @@ class Motion {
 
       context.fillText(line, 0, getY(ascent, frame, motionFrameIndex, height));
 
-      return context.getImageData(0, 0, width, height);
+      let sx = this.clipWidth ? getImageDataSxOrSy(width, this.clipWidth) : 0;
+      let sy = this.clipHeight ? getImageDataSxOrSy(height, this.clipHeight) : 0;
+      let sw = this.clipWidth ? this.clipWidth : width;
+      let sh = this.clipHeight ? this.clipHeight : height;
+      return context.getImageData(sx, sy, sw, sh);
     });
   }
 
@@ -190,7 +213,11 @@ class Motion {
       newContext.drawImage(imageData, 0, 0);
       newContext.drawImage(imageDatas[index], 0, imageData.height);
 
-      return newContext.getImageData(0, 0, width, height);
+      let sx = this.clipWidth ? getImageDataSxOrSy(width, this.clipWidth) : 0;
+      let sy = this.clipHeight ? getImageDataSxOrSy(height, this.clipHeight) : 0;
+      let sw = this.clipWidth ? this.clipWidth : width;
+      let sh = this.clipHeight ? this.clipHeight : height;
+      return newContext.getImageData(sx, sy, sw, sh);
     });
   }
 

@@ -2,6 +2,8 @@
   "version": "osrs",
   "color": "yellow",
   "motion": "none",
+  "width": 0,
+  "height": 0,
   "suffix": ":",
   "replacement": "",
   "maxMessageLength": 280,

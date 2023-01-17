@@ -17,7 +17,12 @@ const getWordWrapConfig = (options) => {
   return { ...wordWrapConfig, ...options };
 };
 
+const getImageDataSxOrSy = (oldWidthOrHeight, newWidthOrHeight) => {
+  return oldWidthOrHeight / 2 - (newWidthOrHeight / 2);
+};
+
 module.exports = {
   getConfig,
   getWordWrapConfig,
+  getImageDataSxOrSy,
 };
