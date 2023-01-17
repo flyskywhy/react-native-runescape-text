@@ -158,6 +158,7 @@ getRuneScapeText(string, [options], [wordWrapOptions]);
 | cycleDuration    | `number`  | No       | `3000`     | Duration in milliseconds of one cycle before the animation loops                                                                                          |
 | quality          | `number`  | No       | `10`       | Quality to render animations at, more information [here](https://github.com/twolfson/gif-encoder#setqualityquality)                                       |
 | showLogs         | `boolean` | No       | `false`    | Determines whether to print runtime logs or not                                                                                                           |
+| returnBuffer     | `boolean` | No       | `true`     | Determines return buffer or array |
 
 #### WordWrapOptions
 
@@ -181,7 +182,7 @@ The **return value** is an Object with the following properties:
 | width     | `number`          | Image width                            |
 | height    | `number`          | Image height                           |
 | extension | `string`          | File extension `gif`                   |
-| buffer    | `Promise<Buffer>` | Promise resulting in an image buffer   |
+| buffer    | `<Buffer>` or `array` | resulting in an image buffer or array  |
 
 ### Exceptions
 

@@ -70,7 +70,11 @@ class Encoder {
         frames = frames.concat(gif.stream().bin);
       });
 
-    return Buffer.from(frames);
+    if (this.config.returnBuffer) {
+      return Buffer.from(frames);
+    } else {
+      return frames;
+    }
   }
 
   encode(imageDatas) {
