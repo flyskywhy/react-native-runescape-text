@@ -8,6 +8,6 @@
   "scale": 2,
   "fps": 20,
   "cycleDuration": 3000,
-  "quality": 100,
+  "quality": 10,
   "showLogs": false
 }

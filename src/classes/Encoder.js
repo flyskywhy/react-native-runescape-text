@@ -1,58 +1,86 @@
-const GifEncoder = require("gif-encoder");
+const {GIFEncoder} = require('react-native-gifencoder');
+const {Buffer} = require('buffer');
+
+// ref to https://github.com/flyskywhy/PixelShapeRN/blob/v1.1.27/src/workers/generateGif.worker.js#L22
+const isTransparencyPresent = (imageDataArr, transparentColor) => {
+  let i = 0,
+    transpUsed = -1;
+  const len = imageDataArr.length;
+
+  for (; i < len; ) {
+    transpUsed *=
+      imageDataArr[i++] -
+      transparentColor.r +
+      imageDataArr[i++] -
+      transparentColor.g +
+      imageDataArr[i++] -
+      transparentColor.b;
+
+    i++;
+
+    if (!transpUsed) {
+      break;
+    }
+    transpUsed = -1;
+  }
+  return !transpUsed;
+};
 
 class Encoder {
   constructor(config) {
     this.config = config;
   }
 
-  encodePng(contexts) {
-    const data = contexts[0].canvas
-      .toDataURL()
-      .replace(/^data:image\/\w+;base64,/, "");
-
-    return Buffer.from(data, "base64");
-  }
-
-  encodeGif(contexts, width, height) {
-    const gif = new GifEncoder(width, height);
+  encodeGif(imageDatas, width, height) {
+    const gif = new GIFEncoder();
+    const transparentColor = 0x000000;
+    const transpRGB = {r: 0, g: 0, b: 0};
 
     gif.setRepeat(0);
+    // we need to set disposal code of 2 for each frame
+    // to be sure that the current frame will override the previous and won't overlap
+    gif.setDispose(2);
     gif.setQuality(this.config.quality);
     gif.setDelay(this.config.delayPerFrame);
-    gif.setTransparent(0x808080);
-    gif.writeHeader();
+    gif.setSize(width, height);
+    gif.setComment('');
 
-    const frames = [];
-    const buffer = new Promise((resolve, reject) => {
-      gif.on("data", (data) => frames.push(data));
-      gif.on("end", () => resolve(Buffer.concat(frames)));
-      gif.on("error", reject);
-    });
+    let frames = [];
+    imageDatas.map((imageData, index) => {
+        const useTransparency = isTransparencyPresent(imageData, transpRGB);
+        if (useTransparency) {
+          gif.setTransparent(transparentColor);
+        } else {
+          gif.setTransparent(null);
+        }
 
-    contexts
-      .map((context) => context.getImageData(0, 0, width, height).data)
-      .forEach((pixels) => gif.addFrame(pixels));
+        if (index === 0) {
+          gif.start();
+        } else {
+          gif.cont();
+          gif.setProperties(true, false); // started, firstFrame
+        }
 
-    gif.finish();
+        gif.addFrame(imageData.data, true);
 
-    return buffer;
+        if (imageDatas.length === index + 1) {
+          gif.finish();
+        }
+
+        frames = frames.concat(gif.stream().bin);
+      });
+
+    return Buffer.from(frames);
   }
 
-  encode(contexts) {
-    const { width, height } = contexts[0].canvas;
+  encode(imageDatas) {
+    const { width, height } = imageDatas[0];
 
-    return contexts.length === 1
-      ? {
-          width,
-          height,
-          extension: "png",
-          buffer: this.encodePng(contexts),
-        }
-      : {
+    return {
           width,
           height,
           extension: "gif",
-          buffer: this.encodeGif(contexts, width, height),
+          buffer: this.encodeGif(imageDatas, width, height),
         };
   }
 }

@@ -97,7 +97,7 @@ getRuneScapeText(string, [options], [wordWrapOptions]);
 | scale            | `number`  | No       | `2`        | Scale factor of the font (multiples of 16px), prefer integer values greater than or equal to 1, decimal values will render blurry text                    |
 | fps              | `number`  | No       | `20`       | Frames per second to render animations at, prefer integer values less than or equal to 60                                                                 |
 | cycleDuration    | `number`  | No       | `3000`     | Duration in milliseconds of one cycle before the animation loops                                                                                          |
-| quality          | `number`  | No       | `100`      | Quality to render animations at, more information [here](https://github.com/twolfson/gif-encoder#setqualityquality)                                       |
+| quality          | `number`  | No       | `10`       | Quality to render animations at, more information [here](https://github.com/twolfson/gif-encoder#setqualityquality)                                       |
 | showLogs         | `boolean` | No       | `false`    | Determines whether to print runtime logs or not                                                                                                           |
 
 #### WordWrapOptions
@@ -121,7 +121,7 @@ The **return value** is an Object with the following properties:
 | --------- | ----------------- | -------------------------------------- |
 | width     | `number`          | Image width                            |
 | height    | `number`          | Image height                           |
-| extension | `string`          | File extension, either: `png` or `gif` |
+| extension | `string`          | File extension `gif`                   |
 | buffer    | `Promise<Buffer>` | Promise resulting in an image buffer   |
 
 ### Exceptions

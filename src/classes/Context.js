@@ -1,13 +1,14 @@
-const path = require("path");
-const { registerFont, createCanvas } = require("canvas");
+const {createCanvas} = require('@flyskywhy/react-native-gcanvas');
 
-registerFont(path.resolve(__dirname, "../assets/runescape_uf.ttf"), {
-  family: "RuneScape",
-});
+// TODO: register font in react-native
+// registerFont(path.resolve(__dirname, "../assets/runescape_uf.ttf"), {
+//   family: "RuneScape",
+// });
 
 class Context {
   constructor(width, height, scale) {
     this.context = createCanvas(width, height).getContext("2d");
+    this.context.clearRect(0, 0, width, height);
     this.scale = scale;
   }
 
@@ -29,9 +30,11 @@ class Context {
   }
 
   getMerge() {
-    const { width, height } = this.context.canvas;
-    this.context.fillStyle = "rgba(128, 128, 128, 1)";
-    this.context.fillRect(0, 0, width, height);
+    // TODO: below will flash some, so comment them, debug later
+    // const { width, height } = this.context.canvas;
+    // this.context.fillStyle = "rgba(128, 128, 128, 1)";
+    // this.context.fillStyle = "rgba(0, 0, 0, 0)";
+    // this.context.fillRect(0, 0, width, height);
 
     return this.context;
   }

@@ -67,9 +67,12 @@
     "start": "node src/cli.js",
     "test": "jest"
   },
+  "peerDependencies": {
+    "@flyskywhy/react-native-gcanvas": "^5.1.2"
+  },
   "dependencies": {
-    "canvas": "^2.8.0",
     "gif-encoder": "^0.7.2",
+    "react-native-gifencoder": "^1.0.1",
     "word-wrap": "^1.2.3"
   },
   "devDependencies": {

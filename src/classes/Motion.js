@@ -17,7 +17,7 @@ class Motion {
 
     context.fillText(message, 0, ascent);
 
-    return [context];
+    return [context.getImageData(0, 0, width, height)];
   }
 
   renderNoneDynamic(line, color) {
@@ -29,7 +29,7 @@ class Motion {
 
       context.fillText(line, 0, ascent);
 
-      return context;
+      return context.getImageData(0, 0, width, height);
     });
   }
 
@@ -99,7 +99,7 @@ class Motion {
         context.fillText(char, x, y);
       });
 
-      return context;
+      return context.getImageData(0, 0, width, height);
     });
   }
 
@@ -114,7 +114,7 @@ class Motion {
 
       context.fillText(line, Math.round(displacement), ascent);
 
-      return context;
+      return context.getImageData(0, 0, width, height);
     });
   }
 
@@ -164,33 +164,33 @@ class Motion {
 
       context.fillText(line, 0, getY(ascent, frame, motionFrameIndex, height));
 
-      return context;
+      return context.getImageData(0, 0, width, height);
     });
   }
 
-  mergeContexts(mergedContexts, contexts) {
-    if (mergedContexts.length === 0) {
-      return contexts;
+  mergeImageDatas(mergedImageDatas, imageDatas) {
+    if (mergedImageDatas.length === 0) {
+      return imageDatas;
     }
 
     const maxWidth = Math.max(
-      mergedContexts[0].canvas.width,
-      contexts[0].canvas.width
+      mergedImageDatas[0].width,
+      imageDatas[0].width
     );
     const totalHeight =
-      mergedContexts[0].canvas.height + contexts[0].canvas.height;
+      mergedImageDatas[0].height + imageDatas[0].height;
 
-    return mergedContexts.map((context, index) => {
+    return mergedImageDatas.map((imageData, index) => {
       const newContext = new Context(
         maxWidth,
         totalHeight,
         this.scale
       ).getMerge();
 
-      newContext.drawImage(context.canvas, 0, 0);
-      newContext.drawImage(contexts[index].canvas, 0, context.canvas.height);
+      newContext.drawImage(imageData, 0, 0);
+      newContext.drawImage(imageDatas[index], 0, imageData.height);
 
-      return newContext;
+      return newContext.getImageData(0, 0, width, height);
     });
   }
 
@@ -225,9 +225,9 @@ class Motion {
       return this.renderNoneStatic(message, color);
     }
 
-    return message.split("\n").reduce((mergedContexts, line) => {
-      const contexts = this.motionFunction(line, color);
-      return this.mergeContexts(mergedContexts, contexts);
+    return message.split("\n").reduce((mergedImageDatas, line) => {
+      const imageDatas = this.motionFunction(line, color);
+      return this.mergeImageDatas(mergedImageDatas, imageDatas);
     }, []);
   }
 }
