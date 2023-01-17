@@ -1,4 +1,9 @@
-# RuneScape Text
+# react-native-runescape-text
+
+[![npm version](http://img.shields.io/npm/v/react-native-runescape-text.svg?style=flat-square)](https://npmjs.org/package/react-native-runescape-text "View this project on npm")
+[![npm downloads](http://img.shields.io/npm/dm/react-native-runescape-text.svg?style=flat-square)](https://npmjs.org/package/react-native-runescape-text "View this project on npm")
+[![npm licence](http://img.shields.io/npm/l/react-native-runescape-text.svg?style=flat-square)](https://npmjs.org/package/react-native-runescape-text "View this project on npm")
+[![Platform](https://img.shields.io/badge/platform-ios%20%7C%20android%20%7C%20web-989898.svg?style=flat-square)](https://npmjs.org/package/react-native-runescape-text "View this project on npm")
 
 [![Discord](https://discord.com/api/guilds/258167954913361930/embed.png)](https://discord.gg/WjEFnzC) [![Twitter Follow](https://img.shields.io/twitter/follow/peterthehan.svg?style=social)](https://twitter.com/peterthehan)
 
@@ -45,29 +50,81 @@ Refer to this wikiHow guide on [How to Write Text Effects on RuneScape](https://
 ## Getting started
 
 ```
-npm i runescape-text
+npm install react-native-runescape-text
 ```
 
 ## Examples
 
-```
-npx runescape-text "wave:glow3: hello world"
-```
-
 ```js
-const fs = require("fs");
-const getRuneScapeText = require("runescape-text");
+import React, {Component} from 'react';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {GCanvasView} from '@flyskywhy/react-native-gcanvas';
+import getRuneScapeText from 'react-native-runescape-text';
 
-async function main() {
-  const string = "wave:glow3: hello world";
-  const options = { showLogs: true };
+export default class WebglCubeMaps extends Component {
+  constructor(props) {
+    super(props);
+    this.canvas = null;
+    this.state = {
+      debugInfo: 'hello world',
+      hasOc1: false,
+    };
+  }
 
-  const { extension, buffer } = getRuneScapeText(string, options);
+  takePicture = () => {
+    const options = {
+      scale: 1,
+      fps: 10,
+      motion: 'scroll',
+    };
+    const {width, height, extension, buffer} = getRuneScapeText(this.state.debugInfo, options);
 
-  fs.writeFileSync(`./runescape-text.${extension}`, await buffer);
+    console.warn(width, height, extension);
+    console.warn(buffer);
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        {Platform.OS !== 'web' && (
+          <GCanvasView
+            style={{
+              width: 1000, // 1000 should enough for offscreen canvas usage
+              height: 1000,
+              position: 'absolute',
+              left: 1000, // 1000 should enough to not display on screen means offscreen canvas :P
+              top: 0,
+              zIndex: -100, // -100 should enough to not bother onscreen canvas
+            }}
+            offscreenCanvas={true}
+            onCanvasCreate={(canvas) => this.setState({hasOc1: true})}
+            devicePixelRatio={1} // should not 1 < devicePixelRatio < 2 as float to avoid pixel offset flaw when GetImageData with PixelsSampler in @flyskywhy/react-native-gcanvas/core/src/support/GLUtil.cpp
+            isGestureResponsible={false}
+          />
+        )}
+        {Platform.OS === 'web' || this.state.hasOc1 && (
+          <TouchableOpacity onPress={this.takePicture}>
+            <Text style={styles.welcome}>Click me console.warn()</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+    );
+  }
 }
 
-main();
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    marginVertical: 20,
+  },
+});
 ```
 
 ## Syntax
