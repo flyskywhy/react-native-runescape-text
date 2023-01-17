@@ -177,12 +177,13 @@ Property information can be found [here](https://github.com/jonschlinkert/word-w
 
 The **return value** is an Object with the following properties:
 
-| Property  | Type              | Description                            |
-| --------- | ----------------- | -------------------------------------- |
-| width     | `number`          | Image width                            |
-| height    | `number`          | Image height                           |
-| extension | `string`          | File extension `gif`                   |
-| buffer    | `<Buffer>` or `array` | resulting in an image buffer or array  |
+| Property     | Type                  | Description                           |
+| ---------    | -----------------     | ------------------------------------- |
+| width        | `number`              | Image width                           |
+| height       | `number`              | Image height                          |
+| framesLength | `number`              | GIF frames length                     |
+| extension    | `string`              | File extension `gif`                  |
+| buffer       | `<Buffer>` or `array` | resulting in an image buffer or array |
 
 ### Exceptions
 

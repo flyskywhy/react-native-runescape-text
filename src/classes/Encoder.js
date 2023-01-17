@@ -83,6 +83,7 @@ class Encoder {
     return {
           width,
           height,
+          framesLength: imageDatas.length,
           extension: "gif",
           buffer: this.encodeGif(imageDatas, width, height),
         };
