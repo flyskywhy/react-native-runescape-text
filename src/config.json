@@ -15,5 +15,5 @@
   "imageGradientEnabled": true,
   "gradientThreshold": 100,
   "showLogs": false,
-  "returnBufferType": "Buffer",
+  "returnBufferType": "Buffer"
 }
