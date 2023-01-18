@@ -47,7 +47,7 @@ class Encoder {
 
     let frames = [];
     imageDatas.map((imageData, index) => {
-        const useTransparency = isTransparencyPresent(imageData, transpRGB);
+        const useTransparency = isTransparencyPresent(imageData.data, transpRGB);
         if (useTransparency) {
           gif.setTransparent(transparentColor);
         } else {
