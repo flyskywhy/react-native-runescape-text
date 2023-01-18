@@ -55,6 +55,7 @@ const gradient2FillStyle = (imageData, fillStyle, gradientThreshold) => {
         imageData.data[pos] = r;
         imageData.data[pos + 1] = g;
         imageData.data[pos + 2] = b;
+        imageData.data[pos + 3] = 255;
       } else {
         imageData.data[pos] = 0;
         imageData.data[pos + 1] = 0;
