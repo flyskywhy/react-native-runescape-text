@@ -13,5 +13,6 @@
   "quality": 10,
   "imageSmoothingEnabled": true,
   "imageGradientEnabled": true,
+  "gradientThreshold": 100,
   "showLogs": false
 }

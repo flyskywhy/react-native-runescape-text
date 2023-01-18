@@ -159,6 +159,7 @@ getRuneScapeText(string, [options], [wordWrapOptions]);
 | quality          | `number`  | No       | `10`       | Quality to render animations at, more information [here](https://github.com/twolfson/gif-encoder#setqualityquality)                                       |
 | imageSmoothingEnabled | `boolean` | No  | `true`     | Determines whether to linear filter the text image |
 | imageGradientEnabled  | `boolean` | No  | `true`     | Determines whether to let the color in text image be gradient, if false, it's better also set `imageSmoothingEnabled` be false |
+| gradientThreshold     | `number`  | No  | `100`      | When `imageGradientEnabled` is false, if pixel's `a` > `gradientThreshold`, `a` will be modified to 255, otherwise `rgba` will be modified to `00000000` |
 | showLogs         | `boolean` | No       | `false`    | Determines whether to print runtime logs or not                                                                                                           |
 | returnBuffer     | `boolean` | No       | `true`     | Determines return buffer or array |
 

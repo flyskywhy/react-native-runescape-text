@@ -12,6 +12,7 @@ class Motion {
     this.clipHeight = config.height;
     this.imageSmoothingEnabled = config.imageSmoothingEnabled;
     this.imageGradientEnabled = config.imageGradientEnabled;
+    this.gradientThreshold = config.gradientThreshold;
   }
 
   renderNoneStatic(message, color) {
@@ -33,7 +34,7 @@ class Motion {
     let sh = this.clipHeight ? this.clipHeight : height;
     let imageData = context.getImageData(sx, sy, sw, sh);
     if (this.imageGradientEnabled) {
-      gradient2FillStyle(imageData, context.fillStyle);
+      gradient2FillStyle(imageData, context.fillStyle, this.gradientThreshold);
     }
     return [imageData];
   }
@@ -58,7 +59,7 @@ class Motion {
       let sh = this.clipHeight ? this.clipHeight : height;
       let imageData = context.getImageData(sx, sy, sw, sh);
       if (this.imageGradientEnabled) {
-        gradient2FillStyle(imageData, context.fillStyle);
+        gradient2FillStyle(imageData, context.fillStyle, this.gradientThreshold);
       }
       return imageData;
     });
@@ -137,7 +138,7 @@ class Motion {
       let sh = this.clipHeight ? this.clipHeight : height;
       let imageData = context.getImageData(sx, sy, sw, sh);
       if (this.imageGradientEnabled) {
-        gradient2FillStyle(imageData, context.fillStyle);
+        gradient2FillStyle(imageData, context.fillStyle, this.gradientThreshold);
       }
       return imageData;
     });
@@ -165,7 +166,7 @@ class Motion {
       let sh = this.clipHeight ? this.clipHeight : height;
       let imageData = context.getImageData(sx, sy, sw, sh);
       if (this.imageGradientEnabled) {
-        gradient2FillStyle(imageData, context.fillStyle);
+        gradient2FillStyle(imageData, context.fillStyle, this.gradientThreshold);
       }
       return imageData;
     });
@@ -228,7 +229,7 @@ class Motion {
       let sh = this.clipHeight ? this.clipHeight : height;
       let imageData = context.getImageData(sx, sy, sw, sh);
       if (this.imageGradientEnabled) {
-        gradient2FillStyle(imageData, context.fillStyle);
+        gradient2FillStyle(imageData, context.fillStyle, this.gradientThreshold);
       }
       return imageData;
     });

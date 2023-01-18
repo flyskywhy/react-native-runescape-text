@@ -43,16 +43,24 @@ const isAnimated = (color, motion) => {
   return motion !== "none" || dynamicColors.includes(color);
 };
 
-const gradient2FillStyle = (imageData, fillStyle) => {
+const gradient2FillStyle = (imageData, fillStyle, gradientThreshold) => {
   const {r, g, b} = tinycolor(fillStyle).toRgb();
   const totalPixels = imageData.data.length;
 
   for (var i = 0; i < totalPixels; i++) {
     const pos = i * 4;
-    if (imageData.data[pos + 3] > 0) { // alpha
-      imageData.data[pos] = r;
-      imageData.data[pos + 1] = g;
-      imageData.data[pos + 2] = b;
+    const a = imageData.data[pos + 3];
+    if (a) {
+      if (a > gradientThreshold) {
+        imageData.data[pos] = r;
+        imageData.data[pos + 1] = g;
+        imageData.data[pos + 2] = b;
+      } else {
+        imageData.data[pos] = 0;
+        imageData.data[pos + 1] = 0;
+        imageData.data[pos + 2] = 0;
+        imageData.data[pos + 3] = 0;
+      }
     }
   }
 };
