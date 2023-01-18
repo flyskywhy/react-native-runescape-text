@@ -17,14 +17,14 @@
     "text",
     "text-animation"
   ],
-  "homepage": "https://github.com/flyskywhy/runescape-text",
+  "homepage": "https://github.com/flyskywhy/react-native-runescape-text",
   "bugs": {
-    "url": "https://github.com/flyskywhy/runescape-text/issues",
+    "url": "https://github.com/flyskywhy/react-native-runescape-text/issues",
     "email": "peter.han.9493@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/flyskywhy/runescape-text"
+    "url": "https://github.com/flyskywhy/react-native-runescape-text"
   },
   "funding": [
     {
