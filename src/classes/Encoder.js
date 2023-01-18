@@ -47,28 +47,28 @@ class Encoder {
 
     let frames = [];
     imageDatas.map((imageData, index) => {
-        const useTransparency = isTransparencyPresent(imageData.data, transpRGB);
-        if (useTransparency) {
-          gif.setTransparent(transparentColor);
-        } else {
-          gif.setTransparent(null);
-        }
+      const useTransparency = isTransparencyPresent(imageData.data, transpRGB);
+      if (useTransparency) {
+        gif.setTransparent(transparentColor);
+      } else {
+        gif.setTransparent(null);
+      }
 
-        if (index === 0) {
-          gif.start();
-        } else {
-          gif.cont();
-          gif.setProperties(true, false); // started, firstFrame
-        }
+      if (index === 0) {
+        gif.start();
+      } else {
+        gif.cont();
+        gif.setProperties(true, false); // started, firstFrame
+      }
 
-        gif.addFrame(imageData.data, true);
+      gif.addFrame(imageData.data, true);
 
-        if (imageDatas.length === index + 1) {
-          gif.finish();
-        }
+      if (imageDatas.length === index + 1) {
+        gif.finish();
+      }
 
-        frames = frames.concat(gif.stream().bin);
-      });
+      frames = frames.concat(gif.stream().bin);
+    });
 
     if (this.config.returnBufferType === 'Buffer') {
       return Buffer.from(frames);
@@ -78,7 +78,7 @@ class Encoder {
   }
 
   encode(imageDatas) {
-    const { width, height } = imageDatas[0];
+    const {width, height} = imageDatas[0];
 
     return {
       width,
