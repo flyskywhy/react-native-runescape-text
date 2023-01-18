@@ -33,7 +33,7 @@ class Motion {
     let sw = this.clipWidth ? this.clipWidth : width;
     let sh = this.clipHeight ? this.clipHeight : height;
     let imageData = context.getImageData(sx, sy, sw, sh);
-    if (this.imageGradientEnabled) {
+    if (!this.imageGradientEnabled) {
       gradient2FillStyle(imageData, context.fillStyle, this.gradientThreshold);
     }
     return [imageData];
@@ -58,7 +58,7 @@ class Motion {
       let sw = this.clipWidth ? this.clipWidth : width;
       let sh = this.clipHeight ? this.clipHeight : height;
       let imageData = context.getImageData(sx, sy, sw, sh);
-      if (this.imageGradientEnabled) {
+      if (!this.imageGradientEnabled) {
         gradient2FillStyle(imageData, context.fillStyle, this.gradientThreshold);
       }
       return imageData;
@@ -137,7 +137,7 @@ class Motion {
       let sw = this.clipWidth ? this.clipWidth : width;
       let sh = this.clipHeight ? this.clipHeight : height;
       let imageData = context.getImageData(sx, sy, sw, sh);
-      if (this.imageGradientEnabled) {
+      if (!this.imageGradientEnabled) {
         gradient2FillStyle(imageData, context.fillStyle, this.gradientThreshold);
       }
       return imageData;
@@ -165,7 +165,7 @@ class Motion {
       let sw = this.clipWidth ? this.clipWidth : width;
       let sh = this.clipHeight ? this.clipHeight : height;
       let imageData = context.getImageData(sx, sy, sw, sh);
-      if (this.imageGradientEnabled) {
+      if (!this.imageGradientEnabled) {
         gradient2FillStyle(imageData, context.fillStyle, this.gradientThreshold);
       }
       return imageData;
@@ -228,7 +228,7 @@ class Motion {
       let sw = this.clipWidth ? this.clipWidth : width;
       let sh = this.clipHeight ? this.clipHeight : height;
       let imageData = context.getImageData(sx, sy, sw, sh);
-      if (this.imageGradientEnabled) {
+      if (!this.imageGradientEnabled) {
         gradient2FillStyle(imageData, context.fillStyle, this.gradientThreshold);
       }
       return imageData;
