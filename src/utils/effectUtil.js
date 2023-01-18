@@ -1,3 +1,5 @@
+const tinycolor = require("tinycolor2");
+
 const staticColors = ["yellow", "red", "green", "cyan", "purple", "white"];
 const dynamicColors = ["glow1", "glow2", "glow3", "flash1", "flash2", "flash3"];
 const colors = [...staticColors, ...dynamicColors];
@@ -41,6 +43,20 @@ const isAnimated = (color, motion) => {
   return motion !== "none" || dynamicColors.includes(color);
 };
 
+const gradient2FillStyle = (imageData, fillStyle) => {
+  const {r, g, b} = tinycolor(fillStyle).toRgb();
+  const totalPixels = imageData.data.length;
+
+  for (var i = 0; i < totalPixels; i++) {
+    const pos = i * 4;
+    if (imageData.data[pos + 3] > 0) { // alpha
+      imageData.data[pos] = r;
+      imageData.data[pos + 1] = g;
+      imageData.data[pos + 2] = b;
+    }
+  }
+};
+
 module.exports = {
   colors,
   motions,
@@ -67,4 +83,5 @@ module.exports = {
   flash2Osrs,
   flash3Osrs,
   isAnimated,
+  gradient2FillStyle,
 };

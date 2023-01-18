@@ -1,5 +1,5 @@
 const { Context, measureText } = require("./Context");
-const { isAnimated } = require("../utils/effectUtil");
+const {gradient2FillStyle, isAnimated} = require("../utils/effectUtil");
 const range = require("../utils/range");
 const {getImageDataSxOrSy} = require("../utils/configUtil");
 
@@ -11,6 +11,7 @@ class Motion {
     this.clipWidth = config.width;
     this.clipHeight = config.height;
     this.imageSmoothingEnabled = config.imageSmoothingEnabled;
+    this.imageGradientEnabled = config.imageGradientEnabled;
   }
 
   renderNoneStatic(message, color) {
@@ -30,7 +31,11 @@ class Motion {
     let sy = this.clipHeight ? getImageDataSxOrSy(height, this.clipHeight) : 0;
     let sw = this.clipWidth ? this.clipWidth : width;
     let sh = this.clipHeight ? this.clipHeight : height;
-    return [context.getImageData(sx, sy, sw, sh)];
+    let imageData = context.getImageData(sx, sy, sw, sh);
+    if (this.imageGradientEnabled) {
+      gradient2FillStyle(imageData, context.fillStyle);
+    }
+    return [imageData];
   }
 
   renderNoneDynamic(line, color) {
@@ -51,7 +56,11 @@ class Motion {
       let sy = this.clipHeight ? getImageDataSxOrSy(height, this.clipHeight) : 0;
       let sw = this.clipWidth ? this.clipWidth : width;
       let sh = this.clipHeight ? this.clipHeight : height;
-      return context.getImageData(sx, sy, sw, sh);
+      let imageData = context.getImageData(sx, sy, sw, sh);
+      if (this.imageGradientEnabled) {
+        gradient2FillStyle(imageData, context.fillStyle);
+      }
+      return imageData;
     });
   }
 
@@ -126,7 +135,11 @@ class Motion {
       let sy = this.clipHeight ? getImageDataSxOrSy(height, this.clipHeight) : 0;
       let sw = this.clipWidth ? this.clipWidth : width;
       let sh = this.clipHeight ? this.clipHeight : height;
-      return context.getImageData(sx, sy, sw, sh);
+      let imageData = context.getImageData(sx, sy, sw, sh);
+      if (this.imageGradientEnabled) {
+        gradient2FillStyle(imageData, context.fillStyle);
+      }
+      return imageData;
     });
   }
 
@@ -150,7 +163,11 @@ class Motion {
       let sy = this.clipHeight ? getImageDataSxOrSy(height, this.clipHeight) : 0;
       let sw = this.clipWidth ? this.clipWidth : width;
       let sh = this.clipHeight ? this.clipHeight : height;
-      return context.getImageData(sx, sy, sw, sh);
+      let imageData = context.getImageData(sx, sy, sw, sh);
+      if (this.imageGradientEnabled) {
+        gradient2FillStyle(imageData, context.fillStyle);
+      }
+      return imageData;
     });
   }
 
@@ -209,7 +226,11 @@ class Motion {
       let sy = this.clipHeight ? getImageDataSxOrSy(height, this.clipHeight) : 0;
       let sw = this.clipWidth ? this.clipWidth : width;
       let sh = this.clipHeight ? this.clipHeight : height;
-      return context.getImageData(sx, sy, sw, sh);
+      let imageData = context.getImageData(sx, sy, sw, sh);
+      if (this.imageGradientEnabled) {
+        gradient2FillStyle(imageData, context.fillStyle);
+      }
+      return imageData;
     });
   }
 

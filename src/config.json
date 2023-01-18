@@ -12,5 +12,6 @@
   "cycleDuration": 3000,
   "quality": 10,
   "imageSmoothingEnabled": true,
+  "imageGradientEnabled": true,
   "showLogs": false
 }
