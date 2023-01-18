@@ -11,5 +11,6 @@
   "fps": 20,
   "cycleDuration": 3000,
   "quality": 10,
+  "imageSmoothingEnabled": true,
   "showLogs": false
 }

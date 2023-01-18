@@ -6,8 +6,9 @@ const {createCanvas} = require('@flyskywhy/react-native-gcanvas');
 // });
 
 class Context {
-  constructor(width, height, scale) {
+  constructor(width, height, scale, imageSmoothingEnabled) {
     this.context = createCanvas(width, height).getContext("2d");
+    this.context.imageSmoothingEnabled = imageSmoothingEnabled;
     this.context.clearRect(0, 0, width, height);
     this.scale = scale;
   }

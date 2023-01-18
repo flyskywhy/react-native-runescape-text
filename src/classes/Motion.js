@@ -10,12 +10,18 @@ class Motion {
     this.totalFrames = config.totalFrames;
     this.clipWidth = config.width;
     this.clipHeight = config.height;
+    this.imageSmoothingEnabled = config.imageSmoothingEnabled;
   }
 
   renderNoneStatic(message, color) {
     const { width, height, ascent } = measureText(message, this.scale);
 
-    const context = new Context(width, height, this.scale).getStatic();
+    const context = new Context(
+      width,
+      height,
+      this.scale,
+      this.imageSmoothingEnabled,
+    ).getStatic();
     context.fillStyle = color.calculate(0);
 
     context.fillText(message, 0, ascent);
@@ -31,7 +37,12 @@ class Motion {
     const { width, height, ascent } = measureText(line, this.scale);
 
     return range(this.totalFrames).map((frame) => {
-      const context = new Context(width, height, this.scale).getDynamic();
+      const context = new Context(
+        width,
+        height,
+        this.scale,
+        this.imageSmoothingEnabled,
+      ).getDynamic();
       context.fillStyle = color.calculate(frame);
 
       context.fillText(line, 0, ascent);
@@ -92,7 +103,8 @@ class Motion {
       const context = new Context(
         totalWidth,
         totalHeight,
-        this.scale
+        this.scale,
+        this.imageSmoothingEnabled,
       ).getDynamic();
       context.fillStyle = color.calculate(frame);
 
@@ -122,7 +134,12 @@ class Motion {
     const { width, height, ascent } = measureText(line, this.scale);
 
     return range(this.totalFrames).map((frame) => {
-      const context = new Context(width, height, this.scale).getDynamic();
+      const context = new Context(
+        width,
+        height,
+        this.scale,
+        this.imageSmoothingEnabled,
+      ).getDynamic();
       context.fillStyle = color.calculate(frame);
 
       const displacement = width - ((2 * frame) / this.totalFrames) * width;
@@ -178,7 +195,12 @@ class Motion {
     const motionFrameIndex = Math.round(this.totalFrames / 6);
 
     return range(this.totalFrames).map((frame) => {
-      const context = new Context(width, height, this.scale).getDynamic();
+      const context = new Context(
+        width,
+        height,
+        this.scale,
+        this.imageSmoothingEnabled,
+      ).getDynamic();
       context.fillStyle = color.calculate(frame);
 
       context.fillText(line, 0, getY(ascent, frame, motionFrameIndex, height));
@@ -207,7 +229,8 @@ class Motion {
       const newContext = new Context(
         maxWidth,
         totalHeight,
-        this.scale
+        this.scale,
+        this.imageSmoothingEnabled,
       ).getMerge();
 
       newContext.drawImage(imageData, 0, 0);

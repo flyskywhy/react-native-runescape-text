@@ -157,6 +157,7 @@ getRuneScapeText(string, [options], [wordWrapOptions]);
 | fps              | `number`  | No       | `20`       | Frames per second to render animations at, prefer integer values less than or equal to 60                                                                 |
 | cycleDuration    | `number`  | No       | `3000`     | Duration in milliseconds of one cycle before the animation loops                                                                                          |
 | quality          | `number`  | No       | `10`       | Quality to render animations at, more information [here](https://github.com/twolfson/gif-encoder#setqualityquality)                                       |
+| imageSmoothingEnabled | `boolean` | No  | `true`     | Determines whether to linear filter the text image |
 | showLogs         | `boolean` | No       | `false`    | Determines whether to print runtime logs or not                                                                                                           |
 | returnBuffer     | `boolean` | No       | `true`     | Determines return buffer or array |
 
