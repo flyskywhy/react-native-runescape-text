@@ -14,5 +14,6 @@
   "imageSmoothingEnabled": true,
   "imageGradientEnabled": true,
   "gradientThreshold": 100,
-  "showLogs": false
+  "showLogs": false,
+  "returnBufferType": "Buffer",
 }

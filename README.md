@@ -161,7 +161,7 @@ getRuneScapeText(string, [options], [wordWrapOptions]);
 | imageGradientEnabled  | `boolean` | No  | `true`     | Determines whether to let the color in text image be gradient, if false, it's better also set `imageSmoothingEnabled` be false |
 | gradientThreshold     | `number`  | No  | `100`      | When `imageGradientEnabled` is false, if pixel's `a` > `gradientThreshold`, `a` will be modified to 255, otherwise `rgba` will be modified to `00000000` |
 | showLogs         | `boolean` | No       | `false`    | Determines whether to print runtime logs or not                                                                                                           |
-| returnBuffer     | `boolean` | No       | `true`     | Determines return buffer or array |
+| returnBufferType | `string`  | No       | `Buffer`   | Determines return buffer type, either: `Buffer`, `Array` or `ArrayOfImageData` |
 
 #### WordWrapOptions
 
@@ -186,7 +186,7 @@ The **return value** is an Object with the following properties:
 | height       | `number`              | Image height                          |
 | framesLength | `number`              | GIF frames length                     |
 | extension    | `string`              | File extension `gif`                  |
-| buffer       | `<Buffer>` or `array` | resulting in an image buffer or array |
+| buffer       | `<Buffer>`, `<Array>` or `ArrayOfImageData` | result in a buffer or array of a GIF image, or an array contains many ImageData |
 
 ### Exceptions
 

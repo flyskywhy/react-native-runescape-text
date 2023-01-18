@@ -70,7 +70,7 @@ class Encoder {
         frames = frames.concat(gif.stream().bin);
       });
 
-    if (this.config.returnBuffer) {
+    if (this.config.returnBufferType === 'Buffer') {
       return Buffer.from(frames);
     } else {
       return frames;
@@ -81,12 +81,15 @@ class Encoder {
     const { width, height } = imageDatas[0];
 
     return {
-          width,
-          height,
-          framesLength: imageDatas.length,
-          extension: "gif",
-          buffer: this.encodeGif(imageDatas, width, height),
-        };
+      width,
+      height,
+      framesLength: imageDatas.length,
+      extension: 'gif',
+      buffer:
+        this.config.returnBufferType === 'ArrayOfImageData'
+          ? imageDatas
+          : this.encodeGif(imageDatas, width, height),
+    };
   }
 }
 
