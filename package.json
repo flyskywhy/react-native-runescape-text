@@ -1,6 +1,6 @@
 {
   "name": "react-native-runescape-text",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Convert text to a text GIF image with RuneScape chat effects for React Native.",
   "keywords": [
     "animation",
