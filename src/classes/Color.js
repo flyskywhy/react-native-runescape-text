@@ -1,3 +1,5 @@
+const tinycolor = require("tinycolor2");
+
 const {
   yellow,
   red,
@@ -82,11 +84,15 @@ class Color {
       this.version in colorFunctionMap &&
       this.color in colorFunctionMap[this.version]
         ? colorFunctionMap[this.version][this.color]
-        : () => yellow;
+        : null;
   }
 
   calculate(frame) {
-    return `rgba(${this.colorFunction(frame)}, 1)`;
+    if (this.colorFunction === null) {
+      return tinycolor(this.color).toRgbString();
+    } else {
+      return `rgba(${this.colorFunction(frame)}, 1)`;
+    }
   }
 }
 

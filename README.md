@@ -146,7 +146,7 @@ getRuneScapeText(string, [options], [wordWrapOptions]);
 | Property         | Type      | Required | Default    | Description                                                                                                                                               |
 | ---------------- | --------- | -------- | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | version          | `string`  | No       | `"osrs"`   | Game version to use, either: `osrs` or `rs3`                                                                                                              |
-| color            | `string`  | No       | `"yellow"` | Default color effect of the text, either: `yellow`, `red`, `green`, `cyan`, `purple`, `white`, `glow1`, `glow2`, `glow3`, `flash1`, `flash2`, or `flash3` |
+| color            | `string`  | No       | `"yellow"` | Default color effect of the text, either: `yellow`, `red`, `green`, `cyan`, `purple`, `white`, `glow1`, `glow2`, `glow3`, `flash1`, `flash2`, `flash3`, or any other color format in `tinycolor2` |
 | motion           | `string`  | No       | `"none"`   | Default motion effect of the text, either: `none`, `wave`, `wave2`, `shake`, `scroll`, or `slide`                                                         |
 | width            | `number`  | No       | `0`        | Image width want to clip on center, 0 means no clip and width of `Return value` depend on string text length |
 | height           | `number`  | No       | `0`        | Image height want to clip on center, 0 means no clip and height of `Return value` depend on font height |
