@@ -22,11 +22,16 @@ class Parser {
   }
 
   sanitizeMessage(string, effectsString) {
-    const sanitizedMessage = string
-      .replace(effectsString, "")
-      .replace(/([^ -~\t\n]|`)+/g, this.config.replacement)
-      .trimStart()
-      .slice(0, this.config.maxMessageLength);
+    let sanitizedMessage = string
+      .replace(effectsString, "");
+    if (!this.config.supportNonAscii) {
+      sanitizedMessage = sanitizedMessage
+        .replace(/([^ -~\t\n]|`)+/g, this.config.replacement);
+    }
+    if (this.config.trimStart) {
+      sanitizedMessage = sanitizedMessage.trimStart();
+    }
+    sanitizedMessage = sanitizedMessage.slice(0, this.config.maxMessageLength);
 
     if (sanitizedMessage === "") {
       throw new ValueError("message cannot be empty");

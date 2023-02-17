@@ -6,6 +6,8 @@
   "height": 0,
   "suffix": ":",
   "replacement": "",
+  "supportNonAscii": true,
+  "trimStart": false,
   "maxMessageLength": 280,
   "scale": 2,
   "fps": 20,

@@ -151,7 +151,9 @@ getRuneScapeText(string, [options], [wordWrapOptions]);
 | width            | `number`  | No       | `0`        | Image width want to clip on center, 0 means no clip and width of `Return value` depend on string text length |
 | height           | `number`  | No       | `0`        | Image height want to clip on center, 0 means no clip and height of `Return value` depend on font height |
 | suffix           | `string`  | No       | `":"`      | String that should suffix each color and motion string                                                                                                    |
-| replacement      | `string`  | No       | `""`       | String to replace characters the font does not support                                                                                                    |
+| replacement      | `string`  | No       | `""`       | String to replace characters the font does not support when supportNonAscii is false                                                                                   |
+| supportNonAscii  | `boolean` | No       | `true`     | Determines whether the text support Non-ASCII characters like Chinese                                                                                                    |
+| trimStart        | `boolean` | No       | `false`    | Determines whether the text will be trimStart()                                                                                                |
 | maxMessageLength | `number`  | No       | `280`      | Max message length allowed after the string has been sanitized                                                                                            |
 | scale            | `number`  | No       | `2`        | Scale factor of the font (multiples of 16px), prefer integer values greater than or equal to 1, decimal values will render blurry text                    |
 | fps              | `number`  | No       | `20`       | Frames per second to render animations at, prefer integer values less than or equal to 60                                                                 |
