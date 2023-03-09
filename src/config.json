@@ -10,6 +10,7 @@
   "trimStart": false,
   "maxMessageLength": 280,
   "scale": 2,
+  "font": "runescape_uf",
   "fps": 20,
   "cycleDuration": 3000,
   "quality": 10,

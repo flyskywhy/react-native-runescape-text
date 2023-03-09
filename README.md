@@ -156,6 +156,7 @@ getRuneScapeText(string, [options], [wordWrapOptions]);
 | trimStart        | `boolean` | No       | `false`    | Determines whether the text will be trimStart()                                                                                                |
 | maxMessageLength | `number`  | No       | `280`      | Max message length allowed after the string has been sanitized                                                                                            |
 | scale            | `number`  | No       | `2`        | Scale factor of the font (multiples of 16px), prefer integer values greater than or equal to 1, decimal values will render blurry text                    |
+| font             | `string`  | No       | `runescape_uf`| font name                                                                                  |
 | fps              | `number`  | No       | `20`       | Frames per second to render animations at, prefer integer values less than or equal to 60                                                                 |
 | cycleDuration    | `number`  | No       | `3000`     | Duration in milliseconds of one cycle before the animation loops                                                                                          |
 | quality          | `number`  | No       | `10`       | Quality to render animations at, more information [here](https://github.com/twolfson/gif-encoder#setqualityquality)                                       |
@@ -189,6 +190,19 @@ The **return value** is an Object with the following properties:
 | framesLength | `number`              | GIF frames length                     |
 | extension    | `string`              | File extension `gif`                  |
 | buffer       | `<Buffer>`, `<Array>` or `ArrayOfImageData` | result in a buffer or array of a GIF image, or an array contains many ImageData |
+
+### Install custom Font
+Ref to `custom fonts` in `README.md` of [@flyskywhy/react-native-gcanvas](https://github.com/flyskywhy/react-native-gcanvas) to install custom fonts and registerFont() if on Android, e.g. install from `src/assets/runescape_uf.ttf` and
+```
+if (Platform.OS === 'android') {
+  registerFont(`${RNFS.ExternalDirectoryPath}/fonts/runescape_uf.ttf`);
+}
+```
+then `options.font = 'runescape_uf'` before run `getRuneScapeText()`.
+
+Consider [react-native-font-picker](https://github.com/flyskywhy/react-native-font-picker), and here is the result of [Font Picker to fillText](https://github.com/flyskywhy/GCanvasRNExamples/blob/master/app/components/FontPicker2FillText.js) on [@flyskywhy/react-native-gcanvas](https://github.com/flyskywhy/react-native-gcanvas).
+
+<img src="https://raw.githubusercontent.com/flyskywhy/GCanvasRNExamples/master/assets/FontPicker2FillText.gif" width="480">
 
 ### Exceptions
 

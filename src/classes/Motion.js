@@ -7,6 +7,7 @@ class Motion {
   constructor(config) {
     this.version = config.version;
     this.scale = config.scale;
+    this.fontName = config.font;
     this.totalFrames = config.totalFrames;
     this.clipWidth = config.width;
     this.clipHeight = config.height;
@@ -16,13 +17,14 @@ class Motion {
   }
 
   renderNoneStatic(message, color) {
-    const { width, height, ascent } = measureText(message, this.scale);
+    const { width, height, ascent } = measureText(message, this.scale, this.fontName);
 
     const context = new Context(
       width,
       height,
       this.scale,
       this.imageSmoothingEnabled,
+      this.fontName,
     ).getStatic();
     context.fillStyle = color.calculate(0);
 
@@ -40,7 +42,7 @@ class Motion {
   }
 
   renderNoneDynamic(line, color) {
-    const { width, height, ascent } = measureText(line, this.scale);
+    const { width, height, ascent } = measureText(line, this.scale, this.fontName);
 
     return range(this.totalFrames).map((frame) => {
       const context = new Context(
@@ -48,6 +50,7 @@ class Motion {
         height,
         this.scale,
         this.imageSmoothingEnabled,
+        this.fontName,
       ).getDynamic();
       context.fillStyle = color.calculate(frame);
 
@@ -103,7 +106,7 @@ class Motion {
     color,
     { amplitudeFactor, getTotalWidth, frameFactor, getWave, getX }
   ) {
-    const { width, height, ascent } = measureText(line, this.scale);
+    const { width, height, ascent } = measureText(line, this.scale, this.fontName);
 
     const amplitude = height * amplitudeFactor;
     const totalWidth = getTotalWidth(width, amplitude);
@@ -115,6 +118,7 @@ class Motion {
         totalHeight,
         this.scale,
         this.imageSmoothingEnabled,
+        this.fontName,
       ).getDynamic();
       context.fillStyle = color.calculate(frame);
 
@@ -124,7 +128,7 @@ class Motion {
         );
         const displacement = amplitude * getWave(wave, frame);
         const x = getX(
-          measureText(line.slice(0, index), this.scale).width,
+          measureText(line.slice(0, index), this.scale, this.fontName).width,
           displacement
         );
         const y = Math.round(ascent + displacement);
@@ -145,7 +149,7 @@ class Motion {
   }
 
   renderScroll(line, color) {
-    const { width, height, ascent } = measureText(line, this.scale);
+    const { width, height, ascent } = measureText(line, this.scale, this.fontName);
 
     return range(this.totalFrames).map((frame) => {
       const context = new Context(
@@ -153,6 +157,7 @@ class Motion {
         height,
         this.scale,
         this.imageSmoothingEnabled,
+        this.fontName,
       ).getDynamic();
       context.fillStyle = color.calculate(frame);
 
@@ -209,7 +214,7 @@ class Motion {
   }
 
   renderSlide(line, color, { getY }) {
-    const { width, height, ascent } = measureText(line, this.scale);
+    const { width, height, ascent } = measureText(line, this.scale, this.fontName);
     const motionFrameIndex = Math.round(this.totalFrames / 6);
 
     return range(this.totalFrames).map((frame) => {
@@ -218,6 +223,7 @@ class Motion {
         height,
         this.scale,
         this.imageSmoothingEnabled,
+        this.fontName,
       ).getDynamic();
       context.fillStyle = color.calculate(frame);
 
@@ -253,6 +259,7 @@ class Motion {
         totalHeight,
         this.scale,
         this.imageSmoothingEnabled,
+        this.fontName,
       ).getMerge();
 
       newContext.drawImage(imageData, 0, 0);

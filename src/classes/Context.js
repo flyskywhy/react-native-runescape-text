@@ -1,21 +1,17 @@
 const {createCanvas} = require('@flyskywhy/react-native-gcanvas');
 
-// TODO: register font in react-native
-// registerFont(path.resolve(__dirname, "../assets/runescape_uf.ttf"), {
-//   family: "RuneScape",
-// });
-
 class Context {
-  constructor(width, height, scale, imageSmoothingEnabled) {
+  constructor(width, height, scale, imageSmoothingEnabled, fontName) {
     this.context = createCanvas(width, height).getContext("2d");
     this.context.imageSmoothingEnabled = imageSmoothingEnabled;
     this.context.clearRect(0, 0, width, height);
     this.scale = scale;
+    this.fontName = fontName;
   }
 
   getStatic() {
     const fontSize = 16 * this.scale;
-    this.context.font = `${fontSize}px "RuneScape"`;
+    this.context.font = `${fontSize}px ${this.fontName}`;
     this.context.shadowColor = "black";
     this.context.shadowOffsetX = this.scale;
     this.context.shadowOffsetY = this.scale;
@@ -41,10 +37,10 @@ class Context {
   }
 }
 
-const measureText = (message, scale) => {
+const measureText = (message, scale, fontName) => {
   const fontSize = 16 * scale;
   const context = createCanvas(0, 0).getContext("2d");
-  context.font = `${fontSize}px "RuneScape"`;
+  context.font = `${fontSize}px ${this.fontName}`;
   const measurement = context.measureText(message);
 
   return {

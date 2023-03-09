@@ -70,7 +70,7 @@
     "test": "jest"
   },
   "peerDependencies": {
-    "@flyskywhy/react-native-gcanvas": "^5.1.2"
+    "@flyskywhy/react-native-gcanvas": "^5.1.7"
   },
   "dependencies": {
     "gif-encoder": "^0.7.2",
