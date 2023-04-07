@@ -159,7 +159,6 @@ getRuneScapeText(string, [options], [wordWrapOptions]);
 | font             | `string`  | No       | `runescape_uf`| font name                                                                                  |
 | fps              | `number`  | No       | `20`       | Frames per second to render animations at, prefer integer values less than or equal to 60                                                                 |
 | cycleDuration    | `number`  | No       | `3000`     | Duration in milliseconds of one cycle before the animation loops                                                                                          |
-| quality          | `number`  | No       | `10`       | Quality to render animations at, more information [here](https://github.com/twolfson/gif-encoder#setqualityquality)                                       |
 | imageSmoothingEnabled | `boolean` | No  | `true`     | Determines whether to linear filter the text image |
 | imageGradientEnabled  | `boolean` | No  | `true`     | Determines whether to let the color in text image be gradient, if false, it's better also set `imageSmoothingEnabled` be false |
 | gradientThreshold     | `number`  | No  | `100`      | When `imageGradientEnabled` is false, if pixel's `a` > `gradientThreshold`, `a` will be modified to 255, otherwise `rgba` will be modified to `00000000` |

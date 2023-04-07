@@ -13,7 +13,6 @@
   "font": "runescape_uf",
   "fps": 20,
   "cycleDuration": 3000,
-  "quality": 10,
   "imageSmoothingEnabled": true,
   "imageGradientEnabled": true,
   "gradientThreshold": 100,

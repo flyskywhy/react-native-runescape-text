@@ -1,30 +1,5 @@
-const {GIFEncoder} = require('react-native-gifencoder');
+import {GIFEncoder, quantize, applyPalette} from 'gifenc';
 const {Buffer} = require('buffer');
-
-// ref to https://github.com/flyskywhy/PixelShapeRN/blob/v1.1.27/src/workers/generateGif.worker.js#L22
-const isTransparencyPresent = (imageDataArr, transparentColor) => {
-  let i = 0,
-    transpUsed = -1;
-  const len = imageDataArr.length;
-
-  for (; i < len; ) {
-    transpUsed *=
-      imageDataArr[i++] -
-      transparentColor.r +
-      imageDataArr[i++] -
-      transparentColor.g +
-      imageDataArr[i++] -
-      transparentColor.b;
-
-    i++;
-
-    if (!transpUsed) {
-      break;
-    }
-    transpUsed = -1;
-  }
-  return !transpUsed;
-};
 
 class Encoder {
   constructor(config) {
@@ -32,48 +7,43 @@ class Encoder {
   }
 
   encodeGif(imageDatas, width, height) {
-    const gif = new GIFEncoder();
-    const transparentColor = 0x000000;
-    const transpRGB = {r: 0, g: 0, b: 0};
+    // Create an encoding stream
+    const gif = GIFEncoder();
 
-    gif.setRepeat(0);
-    // we need to set disposal code of 2 for each frame
-    // to be sure that the current frame will override the previous and won't overlap
-    gif.setDispose(2);
-    gif.setQuality(this.config.quality);
-    gif.setDelay(this.config.delayPerFrame);
-    gif.setSize(width, height);
-    gif.setComment('');
+    const delay = this.config.delayPerFrame;
 
-    let frames = [];
-    imageDatas.map((imageData, index) => {
-      const useTransparency = isTransparencyPresent(imageData.data, transpRGB);
-      if (useTransparency) {
-        gif.setTransparent(transparentColor);
-      } else {
-        gif.setTransparent(null);
-      }
+    const framesLength = imageDatas.length;
+    for (let i = 0; i < framesLength; i++) {
+      const data = imageDatas[i].data;
 
-      if (index === 0) {
-        gif.start();
-      } else {
-        gif.cont();
-        gif.setProperties(true, false); // started, firstFrame
-      }
+      // Quantize your colors to a 256-color RGB palette palette
+      const palette = quantize(data, 256);
 
-      gif.addFrame(imageData.data, true);
+      // Get an indexed bitmap by reducing each pixel to the nearest color palette
+      const index = applyPalette(data, palette);
 
-      if (imageDatas.length === index + 1) {
-        gif.finish();
-      }
+      // Write a single frame
+      gif.writeFrame(index, width, height, {
+        palette,
+        delay,
+        transparent: true,
+        // dispose: 2,
+      });
 
-      frames = frames.concat(gif.stream().bin);
-    });
+      // Wait a tick so that we don't lock up browser
+      // await new Promise(resolve => setTimeout(resolve, 0));
+    }
+
+    // Write end-of-stream character
+    gif.finish();
+
+    // Get the Uint8Array output of your binary GIF file
+    const output = gif.bytes();
 
     if (this.config.returnBufferType === 'Buffer') {
-      return Buffer.from(frames);
+      return Buffer.from(output);
     } else {
-      return frames;
+      return Array.from(output);
     }
   }
 
