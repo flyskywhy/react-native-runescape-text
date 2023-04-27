@@ -1,4 +1,4 @@
-import {GIFEncoder, quantize, applyPalette} from 'gifenc';
+const {GIFEncoder, quantize, applyPalette} = require('gifenc');
 const {Buffer} = require('buffer');
 
 class Encoder {
