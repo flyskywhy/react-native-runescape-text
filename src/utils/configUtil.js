@@ -2,7 +2,9 @@ const config = require("../config");
 const wordWrapConfig = require("../wordWrapConfig");
 
 const getConfig = (options) => {
-  const merged = { ...config, ...options };
+  let obj = { ...options };
+  Object.keys(obj).forEach(key => obj[key] === undefined && delete obj[key])
+  const merged = { ...config, ...obj };
   const delayPerFrame = 1000 / merged.fps;
   const totalFrames = Math.round(merged.cycleDuration / delayPerFrame);
 
@@ -14,7 +16,9 @@ const getConfig = (options) => {
 };
 
 const getWordWrapConfig = (options) => {
-  return { ...wordWrapConfig, ...options };
+  let obj = { ...options };
+  Object.keys(obj).forEach(key => obj[key] === undefined && delete obj[key])
+  return { ...wordWrapConfig, ...obj };
 };
 
 const getImageDataSxOrSy = (oldWidthOrHeight, newWidthOrHeight) => {
