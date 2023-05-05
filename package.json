@@ -71,7 +71,7 @@
     "test": "jest"
   },
   "peerDependencies": {
-    "@flyskywhy/react-native-gcanvas": "^5.1.7"
+    "@flyskywhy/react-native-gcanvas": "^6.0.3"
   },
   "dependencies": {
     "gifenc": "1.0.3",
