@@ -37,18 +37,14 @@ class Context {
   }
 }
 
-// Some font e.g. [KaiTi](https://github.com/flyskywhy/react-native-font-sim/blob/master/fonts/KaiTi.ttf)
-// need widthPatch, otherwise will lost some pixels in right hand side
-const widthPatch = 3;
-
 const measureText = (message, scale, fontName) => {
   const fontSize = 16 * scale;
   const context = createCanvas(0, 0).getContext("2d");
-  context.font = `${fontSize}px ${this.fontName}`;
+  context.font = `${fontSize}px ${fontName}`;
   const measurement = context.measureText(message);
 
   return {
-    width: measurement.width + widthPatch,
+    width: measurement.width,
     height:
       measurement.actualBoundingBoxAscent +
       measurement.actualBoundingBoxDescent +
