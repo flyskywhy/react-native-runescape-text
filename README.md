@@ -150,6 +150,7 @@ getRuneScapeText(string, [options], [wordWrapOptions]);
 | motion           | `string`  | No       | `"none"`   | Default motion effect of the text, either: `none`, `wave`, `wave2`, `shake`, `scroll`, or `slide`                                                         |
 | width            | `number`  | No       | `0`        | Image width want to clip on center, 0 means no clip and width of `Return value` depend on string text length |
 | height           | `number`  | No       | `0`        | Image height want to clip on center, 0 means no clip and height of `Return value` depend on font height |
+| verticalText     | `boolean` | No       | `false`    | Determines whether draw vertical text when motion is `none`                                                                                                    |
 | suffix           | `string`  | No       | `":"`      | String that should suffix each color and motion string                                                                                                    |
 | replacement      | `string`  | No       | `""`       | String to replace characters the font does not support when supportNonAscii is false                                                                                   |
 | supportNonAscii  | `boolean` | No       | `true`     | Determines whether the text support Non-ASCII characters like Chinese                                                                                                    |

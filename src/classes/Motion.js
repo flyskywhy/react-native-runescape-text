@@ -11,6 +11,7 @@ class Motion {
     this.totalFrames = config.totalFrames;
     this.clipWidth = config.width;
     this.clipHeight = config.height;
+    this.verticalText = config.verticalText;
     this.imageSmoothingEnabled = config.imageSmoothingEnabled;
     this.imageGradientEnabled = config.imageGradientEnabled;
     this.gradientThreshold = config.gradientThreshold;
@@ -19,21 +20,37 @@ class Motion {
   renderNoneStatic(message, color) {
     const { width, height, ascent } = measureText(message, this.scale, this.fontName);
 
+    const verticalSpacingRatio = 0.85;
+
+    const oldWidth = this.verticalText ? height : width;
+    const oldHeight = this.verticalText ?
+        height * verticalSpacingRatio * message.length + height * (1 - verticalSpacingRatio) :
+        height;
+
     const context = new Context(
-      width,
-      height,
+      oldWidth,
+      oldHeight,
       this.scale,
       this.imageSmoothingEnabled,
       this.fontName,
     ).getStatic();
     context.fillStyle = color.calculate(0);
 
-    context.fillText(message, 0, ascent);
+    if (this.verticalText) {
+      context.textAlign = "center";
+      for (let i = 0; i < message.length; i++) {
+        context.fillText(message[i], oldWidth / 2, ascent + i * oldWidth * verticalSpacingRatio);
+      }
+    } else {
+      // textAlign default is "start" after getContext("2d")
+      context.fillText(message, 0, ascent);
+    }
 
-    let sx = this.clipWidth ? getImageDataSxOrSy(width, this.clipWidth) : 0;
-    let sy = this.clipHeight ? getImageDataSxOrSy(height, this.clipHeight) : 0;
-    let sw = this.clipWidth ? this.clipWidth : width;
-    let sh = this.clipHeight ? this.clipHeight : height;
+    let sx = this.clipWidth ? getImageDataSxOrSy(oldWidth, this.clipWidth) : 0;
+    let sy = this.clipHeight ? getImageDataSxOrSy(oldHeight, this.clipHeight) : 0;
+    let sw = this.clipWidth ? this.clipWidth : oldWidth;
+    let sh = this.clipHeight ? this.clipHeight : oldHeight;
+
     let imageData = context.getImageData(sx, sy, sw, sh);
     if (!this.imageGradientEnabled) {
       gradient2FillStyle(imageData, context.fillStyle, this.gradientThreshold);
