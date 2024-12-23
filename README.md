@@ -137,7 +137,7 @@ getRuneScapeText(string, [options], [wordWrapOptions]);
 
 | Parameter                           | Type     | Required | Default | Description                                                                           |
 | ----------------------------------- | -------- | -------- | ------- | ------------------------------------------------------------------------------------- |
-| string                              | `string` | Yes      | _none_  | Text to convert                                                                       |
+| string                              | `string` | Yes      | _none_  | Text to convert, if multiline when motion is `none`, the width, height and verticalText of options will be ignored |
 | [options](#options)                 | `Object` | No       | `{}`    | Options to configure script behavior                                                  |
 | [wordWrapOptions](#wordwrapoptions) | `Object` | No       | `{}`    | Options to configure [word-wrap](https://github.com/jonschlinkert/word-wrap) behavior |
 

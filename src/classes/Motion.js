@@ -18,14 +18,30 @@ class Motion {
   }
 
   renderNoneStatic(message, color) {
-    const { width, height, ascent } = measureText(message, this.scale, this.fontName);
+    const textArray = message.split('\n');
+    const isMultiline = textArray.length > 1;
+    const { width: firstWidth, height: firstHeight, ascent } = measureText(textArray[0], this.scale, this.fontName);
 
     const verticalSpacingRatio = 0.85;
 
-    const oldWidth = this.verticalText ? height : width;
-    const oldHeight = this.verticalText ?
-        height * verticalSpacingRatio * message.length + height * (1 - verticalSpacingRatio) :
-        height;
+    let oldWidth = firstWidth;
+    if (isMultiline) {
+      textArray.map(text => {
+        const {width} = measureText(text, this.scale, this.fontName);
+        if (width > oldWidth) {
+          oldWidth = width;
+        }
+      })
+    } else if (this.verticalText) {
+      oldWidth = firstHeight;
+    }
+
+    let oldHeight = firstHeight;
+    if (isMultiline) {
+      oldHeight = firstHeight * verticalSpacingRatio * textArray.length + firstHeight * (1 - verticalSpacingRatio);
+    } else if (this.verticalText) {
+      oldHeight = firstHeight * verticalSpacingRatio * message.length + firstHeight * (1 - verticalSpacingRatio);
+    }
 
     const context = new Context(
       oldWidth,
@@ -39,17 +55,29 @@ class Motion {
     if (this.verticalText) {
       context.textAlign = "center";
       for (let i = 0; i < message.length; i++) {
-        context.fillText(message[i], oldWidth / 2, ascent + i * oldWidth * verticalSpacingRatio);
+        context.fillText(message[i], oldWidth / 2, ascent + i * firstHeight * verticalSpacingRatio);
       }
     } else {
       // textAlign default is "start" after getContext("2d")
-      context.fillText(message, 0, ascent);
+      for (let i = 0; i < textArray.length; i++) {
+        context.fillText(textArray[i], 0, ascent + i * firstHeight * verticalSpacingRatio);
+      }
     }
 
-    let sx = this.clipWidth ? getImageDataSxOrSy(oldWidth, this.clipWidth) : 0;
-    let sy = this.clipHeight ? getImageDataSxOrSy(oldHeight, this.clipHeight) : 0;
-    let sw = this.clipWidth ? this.clipWidth : oldWidth;
-    let sh = this.clipHeight ? this.clipHeight : oldHeight;
+    let clipWidth = this.clipWidth;
+    if (isMultiline || !this.clipWidth) {
+      clipWidth = oldWidth;
+    }
+
+    let clipHeight = this.clipHeight;
+    if (isMultiline || !this.clipHeight) {
+      clipHeight = oldHeight;
+    }
+
+    let sx = clipWidth ? getImageDataSxOrSy(oldWidth, clipWidth) : 0;
+    let sy = clipHeight ? getImageDataSxOrSy(oldHeight, clipHeight) : 0;
+    let sw = clipWidth ? clipWidth : oldWidth;
+    let sh = clipHeight ? clipHeight : oldHeight;
 
     let imageData = context.getImageData(sx, sy, sw, sh);
     if (!this.imageGradientEnabled) {
